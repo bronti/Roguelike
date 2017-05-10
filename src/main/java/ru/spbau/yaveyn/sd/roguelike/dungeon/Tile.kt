@@ -7,7 +7,8 @@ enum class Tile private constructor(val glyph: Char, val color: Color) {
     FLOOR('#', Color(0x112321)),
     WALL('#', AsciiPanel.white),
     OUTER('x', AsciiPanel.brightBlack),
-    PLAYER_CHARACTER('@', AsciiPanel.brightGreen);
+    PLAYER_CHARACTER('@', AsciiPanel.brightGreen),
+    GOBLIN('g', AsciiPanel.brightRed);
 
     fun isEmpty() = this == FLOOR
 }

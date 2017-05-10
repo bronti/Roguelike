@@ -27,7 +27,7 @@ class DungeonScreen(private val state: GameState) : Screen {
 
     override fun displayOutput(terminal: AsciiPanel) {
         displayTiles(terminal)
-        terminal.write(state.player.tile, RelativePlace(center(), topLeft()))
+//        terminal.write(state.player.tile, RelativePlace(center(), topLeft()))
 
     }
 

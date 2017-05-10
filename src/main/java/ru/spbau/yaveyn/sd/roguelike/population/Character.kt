@@ -7,14 +7,5 @@ import ru.spbau.yaveyn.sd.roguelike.dungeon.Tile
 import java.awt.Color
 
 abstract class Character
-private constructor(private val state: GameState,
-                    private val health: DestructableImpl,
-                    private val gameObject: GameObjectImpl)
-    : GameObject by gameObject,
-        Destructable by health {
-
-    constructor(state: GameState, place:MapWithBorders.Place, tile: Tile, maxHealth: Int)
-            : this(state, DestructableImpl(maxHealth), GameObjectImpl(state, tile)) {
-        gameObject.placeTo(place)
-    }
-}
+constructor(private val state: GameState, private val battleUnit: BattleUnit, private val gameObject: GameObject)
+    : GameObject by gameObject, BattleUnit by battleUnit

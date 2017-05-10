@@ -30,8 +30,10 @@ class GameObjectImpl(private val state: GameState, override val tile: Tile): Gam
 
     override fun placeTo(newPlace: MapWithBorders.Place): Boolean {
         return if (state.dungeon.tile(newPlace).isEmpty()) {
+            if (isOnMap()) state.dungeon.setTile(place!!, Tile.FLOOR)
             place = newPlace
             container = null
+            state.dungeon.setTile(newPlace, tile)
             true
         }
         else false
