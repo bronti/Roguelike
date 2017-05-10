@@ -1,3 +1,9 @@
 package ru.spbau.yaveyn.sd.roguelike.population
 
-open class Destructable(var health: Int = 100)
+interface Destructable {
+    fun getHealth(): Int
+}
+
+class DestructableImpl(private var maxHealth: Int): Destructable {
+    override fun getHealth() = maxHealth
+}

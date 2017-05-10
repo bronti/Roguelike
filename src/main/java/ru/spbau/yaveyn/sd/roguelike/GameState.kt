@@ -5,6 +5,6 @@ import ru.spbau.yaveyn.sd.roguelike.population.CharacterFactory
 
 
 class GameState(val dungeon: Dungeon) {
-    private val charFactory = CharacterFactory(dungeon)
+    private val charFactory = CharacterFactory(this)
     val player = charFactory.playerCharacter
 }

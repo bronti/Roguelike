@@ -12,7 +12,7 @@ import ru.spbau.yaveyn.sd.roguelike.screenWidth
 
 class DungeonScreen(private val state: GameState) : Screen {
 
-    fun center() = state.player.onMap()
+    fun center() = state.player.getPlace()
 
     private fun topLeft(): MapWithBorders.Place {
         var topLeft = center().shifted(-screenWidth / 2, -screenHeight / 2)

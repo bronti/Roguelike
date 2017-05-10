@@ -1,17 +1,18 @@
 package ru.spbau.yaveyn.sd.roguelike.population
 
+import ru.spbau.yaveyn.sd.roguelike.GameState
 import ru.spbau.yaveyn.sd.roguelike.dungeon.Dungeon
 import ru.spbau.yaveyn.sd.roguelike.dungeon.MapWithBorders
 
-class CharacterFactory(private val dungeon: Dungeon) {
-    val playerCharacter: PlayerCharacter = PlayerCharacter(getEmptyPlace())
+class CharacterFactory(private val state: GameState) {
+    val playerCharacter: PlayerCharacter = PlayerCharacter(state, getEmptyPlace())
 
     private fun getEmptyPlace(): MapWithBorders.Place
     {
-        var place = dungeon.getRandomPlace()
+        var place: MapWithBorders.Place
         do {
-            place = dungeon.getRandomPlace()
-        } while (!dungeon.tile(place).isEmpty())
+            place = state.dungeon.getRandomPlace()
+        } while (!state.dungeon.tile(place).isEmpty())
         return place
     }
 }

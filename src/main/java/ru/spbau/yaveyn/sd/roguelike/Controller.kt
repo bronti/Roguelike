@@ -6,6 +6,7 @@ import ru.spbau.yaveyn.sd.roguelike.dungeon.generation.makeCaves
 import ru.spbau.yaveyn.sd.roguelike.screen.*
 import java.awt.event.KeyEvent
 import java.awt.event.KeyListener
+import kotlin.system.exitProcess
 
 class Controller(private val repaint:() -> Unit): KeyListener {
 
@@ -16,9 +17,7 @@ class Controller(private val repaint:() -> Unit): KeyListener {
 
     private var screen: Screen = WelcomeScreen()
 
-    override fun keyPressed(e: KeyEvent) {}
-
-    override fun keyReleased(key: KeyEvent) {
+    override fun keyPressed(key: KeyEvent) {
         screen = when (screen) {
             is WelcomeScreen -> StartScreen()
             is StartScreen   -> DungeonScreen(state)
@@ -36,15 +35,22 @@ class Controller(private val repaint:() -> Unit): KeyListener {
                     else               -> screen
                 }
             }
-            is GameOverScreen -> if (key.keyCode == KeyEvent.VK_ENTER) StartScreen() else screen
+            is GameOverScreen ->
+                when (key.keyCode) {
+                    KeyEvent.VK_ENTER -> StartScreen()
+                    KeyEvent.VK_ESCAPE -> exitProcess(0)
+                    else -> screen
+                }
             else -> screen
         }
         repaint()
     }
 
+    override fun keyReleased(key: KeyEvent) {}
+
+    override fun keyTyped(e: KeyEvent) {}
+
     fun refreshOutput(terminal: AsciiPanel) {
         screen.displayOutput(terminal)
     }
-
-    override fun keyTyped(e: KeyEvent) {}
 }
