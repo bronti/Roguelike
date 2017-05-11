@@ -11,7 +11,7 @@ private constructor(private val health: Destructable, private val baseHit: Hit)
     constructor(maxHealth: Int, baseHit: Hit): this(DestructableImpl(maxHealth), baseHit)
 
     override fun makeHit(other: Destructable) {
-        other.takeHit(baseHit)
+        if (!isDestructed()) other.takeHit(baseHit)
     }
 }
 

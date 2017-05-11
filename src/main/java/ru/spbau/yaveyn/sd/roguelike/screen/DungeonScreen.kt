@@ -5,7 +5,7 @@ import asciiPanel.AsciiPanel
 import ru.spbau.yaveyn.sd.roguelike.GameState
 import ru.spbau.yaveyn.sd.roguelike.dungeon.Dungeon
 import ru.spbau.yaveyn.sd.roguelike.dungeon.MapWithBorders
-import ru.spbau.yaveyn.sd.roguelike.population.CharacterFactory
+import ru.spbau.yaveyn.sd.roguelike.population.CreaturesHolder
 import ru.spbau.yaveyn.sd.roguelike.screenHeight
 import ru.spbau.yaveyn.sd.roguelike.screenWidth
 
@@ -27,7 +27,6 @@ class DungeonScreen(private val state: GameState) : Screen {
 
     override fun displayOutput(terminal: AsciiPanel) {
         displayTiles(terminal)
-//        terminal.write(state.player.tile, RelativePlace(center(), topLeft()))
 
     }
 

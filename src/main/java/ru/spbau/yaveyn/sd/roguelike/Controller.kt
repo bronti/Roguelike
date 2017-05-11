@@ -24,10 +24,10 @@ class Controller(private val repaint:() -> Unit): KeyListener {
             is DungeonScreen -> {
                 val dungeonScreen = screen as DungeonScreen
                 when (key.keyCode) {
-                    KeyEvent.VK_LEFT   -> state.player.placeTo(dungeonScreen.center().shiftedX(-1))
-                    KeyEvent.VK_RIGHT  -> state.player.placeTo(dungeonScreen.center().shiftedX(1))
-                    KeyEvent.VK_UP     -> state.player.placeTo(dungeonScreen.center().shiftedY(-1))
-                    KeyEvent.VK_DOWN   -> state.player.placeTo(dungeonScreen.center().shiftedY(1))
+                    KeyEvent.VK_LEFT   -> state.player.moveTo(dungeonScreen.center().shiftedX(-1))
+                    KeyEvent.VK_RIGHT  -> state.player.moveTo(dungeonScreen.center().shiftedX(1))
+                    KeyEvent.VK_UP     -> state.player.moveTo(dungeonScreen.center().shiftedY(-1))
+                    KeyEvent.VK_DOWN   -> state.player.moveTo(dungeonScreen.center().shiftedY(1))
                 }
                 when (key.keyCode) {
                     KeyEvent.VK_ESCAPE -> GameOverScreen(false)

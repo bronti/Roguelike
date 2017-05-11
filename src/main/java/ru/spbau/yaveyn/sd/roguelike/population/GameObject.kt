@@ -6,7 +6,7 @@ import ru.spbau.yaveyn.sd.roguelike.dungeon.MapWithBorders
 import ru.spbau.yaveyn.sd.roguelike.dungeon.Tile
 
 interface GameObject {
-    val tile: Tile
+    var tile: Tile
 
     fun isOnMap(): Boolean
     fun isInContainer(): Boolean
@@ -17,7 +17,7 @@ interface GameObject {
     fun getPlace(): MapWithBorders.Place
 }
 
-class GameObjectImpl(private val state: GameState, override val tile: Tile): GameObject {
+class GameObjectImpl(private val state: GameState, override var tile: Tile): GameObject {
 
     private var place: MapWithBorders.Place? = null
     private var container: Container? = null

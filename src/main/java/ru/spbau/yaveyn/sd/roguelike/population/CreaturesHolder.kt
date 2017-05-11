@@ -1,5 +1,6 @@
 package ru.spbau.yaveyn.sd.roguelike.population
 
+import ru.spbau.yaveyn.sd.roguelike.GOBLINS_COUNT
 import ru.spbau.yaveyn.sd.roguelike.GameState
 import ru.spbau.yaveyn.sd.roguelike.dungeon.Dungeon
 import ru.spbau.yaveyn.sd.roguelike.dungeon.MapWithBorders
@@ -7,16 +8,25 @@ import ru.spbau.yaveyn.sd.roguelike.dungeon.Tile
 import ru.spbau.yaveyn.sd.roguelike.goblinBattleUnit
 import ru.spbau.yaveyn.sd.roguelike.playerBattleUnit
 
-class CharacterFactory(private val state: GameState) {
+class CreaturesHolder(private val state: GameState) {
     val playerCharacter: PlayerCharacter = PlayerCharacter(state, playerBattleUnit(), GameObjectImpl(state, Tile.PLAYER_CHARACTER))
-    val goblins: List<NonPlayerCharacter> = (1..10).map { _ -> getGoblin() } .toList()
+    val creatures: ArrayList<Creature> = ArrayList()
 
     init {
-        playerCharacter.placeTo(getEmptyPlace())
-        goblins.forEach { g -> g.placeTo(getEmptyPlace()) }
+        placeCreature(playerCharacter)
+        (1..GOBLINS_COUNT).map { _ -> getGoblin() } .forEach { g -> placeCreature(g) }
     }
 
-    private fun getGoblin() = NonPlayerCharacter(state, goblinBattleUnit(), GameObjectImpl(state, Tile.GOBLIN))
+    fun creatureOnPlace(place: MapWithBorders.Place) = creatures.firstOrNull { c -> c.getPlace() == place }
+    fun removeCreature(creature: Creature) = creatures.remove(creature)
+
+    private fun getGoblin() = Creature(state, goblinBattleUnit(), GameObjectImpl(state, Tile.GOBLIN))
+
+    private fun placeCreature(creature: Creature) {
+        val place = getEmptyPlace()
+        creature.placeTo(place)
+        creatures.add(creature)
+    }
 
     private fun getEmptyPlace(): MapWithBorders.Place
     {
