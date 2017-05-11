@@ -10,4 +10,4 @@ val ITERS_COUNT_FOR_CAVE_DUNGEON_GENERATION = 20
 val GOBLINS_COUNT = 100
 
 fun playerBattleUnit() = BattleUnitImpl(100, Hit(10))
-fun goblinBattleUnit() = BattleUnitImpl(30, Hit(3))
+fun goblinBattleUnit() = BattleUnitImpl(30, Hit(10))

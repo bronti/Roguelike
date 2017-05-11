@@ -11,6 +11,7 @@ constructor(private val state: GameState, private val battleUnit: BattleUnit, pr
     : GameObject by gameObject, BattleUnit by battleUnit{
 
     fun moveTo(newPlace: MapWithBorders.Place) {
+        if (isDestructed()) return
         if (state.dungeon.tile(newPlace).isEmpty()) {
             gameObject.placeTo(newPlace)
         }

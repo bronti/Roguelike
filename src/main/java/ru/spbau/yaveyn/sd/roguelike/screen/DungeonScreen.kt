@@ -15,7 +15,7 @@ class DungeonScreen(private val state: GameState) : Screen {
     fun center() = state.player.getPlace()
 
     private fun topLeft(): MapWithBorders.Place {
-        var topLeft = center().shifted(-screenWidth / 2, -screenHeight / 2)
+        var topLeft = center().shifted(-screenWidth / 2, -screenHeight / 2).bounded()
         if (topLeft.x + screenWidth > state.dungeon.width) {
             topLeft = topLeft.shiftedX(state.dungeon.width - topLeft.x - screenWidth)
         }

@@ -11,6 +11,7 @@ abstract class MapWithBorders(val width: Int, val height: Int) {
         fun shiftedX(d: Int) = Place((x + d), y)
         fun shiftedY(d: Int) = Place(x, (y + d))
         fun shifted(dx: Int, dy: Int) = Place((x + dx), (y + dy))
+        fun bounded() = Place(toBoundedX(x), toBoundedY(y))
 
         private fun toBoundedX(t: Int) = Math.max(0, Math.min(t, width - 1))
         private fun toBoundedY(t: Int) = Math.max(0, Math.min(t, height - 1))
