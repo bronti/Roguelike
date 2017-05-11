@@ -5,6 +5,7 @@ import ru.spbau.yaveyn.sd.roguelike.population.Hit
 
 val screenWidth = 50
 val screenHeight = 50
+val notesHeight = 10
 
 val ITERS_COUNT_FOR_CAVE_DUNGEON_GENERATION = 20
 val GOBLINS_COUNT = 100

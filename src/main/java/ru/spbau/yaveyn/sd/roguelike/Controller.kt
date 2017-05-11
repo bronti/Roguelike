@@ -38,7 +38,6 @@ class Controller(private val repaint:() -> Unit): KeyListener {
                 }
                 else when (key.keyCode) {
                     KeyEvent.VK_ESCAPE -> GameOverScreen(false)
-                    KeyEvent.VK_ENTER  -> GameOverScreen(true)
                     else               -> screen
                 }
             }

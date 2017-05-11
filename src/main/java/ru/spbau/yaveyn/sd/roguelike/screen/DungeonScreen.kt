@@ -27,7 +27,9 @@ class DungeonScreen(private val state: GameState) : Screen {
 
     override fun displayOutput(terminal: AsciiPanel) {
         displayTiles(terminal)
-
+        terminal.write("your health:", 0, screenHeight + 1)
+        terminal.write(state.player.getHealth().toString() + " / " + state.player.maxHealth.toString(), 0, screenHeight + 4)
+        terminal.write("press [escape] to give up this miserable life", 0, screenHeight + 7)
     }
 
     private fun displayTiles(terminal: AsciiPanel) {
