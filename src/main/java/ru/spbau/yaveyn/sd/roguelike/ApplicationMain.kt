@@ -7,7 +7,7 @@ import asciiPanel.AsciiPanel
 
 
 class ApplicationMain : JFrame() {
-    private var terminal: AsciiPanel = AsciiPanel(screenWidth, screenHeight, AsciiFont.TALRYTH_15_15)
+    private var terminal: AsciiPanel = AsciiPanel(screenWidth, screenHeight + notesHeight, AsciiFont.TALRYTH_15_15)
     private val controller: Controller = Controller { repaint() }
 
     init {

@@ -46,10 +46,6 @@
     </build>
 
     <dependencies>
-        <!--<dependency>-->
-            <!--<groupId>com.github.trystan</groupId>-->
-            <!--<artifactId>AsciiPanel</artifactId>-->
-        <!--</dependency>-->
         <dependency>
             <groupId>net.trystan</groupId>
             <artifactId>ascii-panel</artifactId>

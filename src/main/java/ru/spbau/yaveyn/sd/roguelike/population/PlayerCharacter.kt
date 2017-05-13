@@ -1,6 +1,9 @@
 package ru.spbau.yaveyn.sd.roguelike.population
 
-import ru.spbau.yaveyn.sd.roguelike.dungeon.MapWithBorders
-import ru.spbau.yaveyn.sd.roguelike.dungeon.Tile
+import ru.spbau.yaveyn.sd.roguelike.GameState
+import ru.spbau.yaveyn.sd.roguelike.PLAYER_WEIGHT
+import ru.spbau.yaveyn.sd.roguelike.dungeon.OnMapObject
+import ru.spbau.yaveyn.sd.roguelike.dungeon.OnMapObjectImpl
 
-class PlayerCharacter(place: MapWithBorders.Place): Character(Tile.PLAYER_CHARACTER, place)
+class PlayerCharacter (state: GameState, battleUnit: BattleUnit, onMapObject: OnMapObject)
+    : Creature(state, battleUnit, onMapObject, PLAYER_WEIGHT)

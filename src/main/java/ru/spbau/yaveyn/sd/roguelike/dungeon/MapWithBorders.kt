@@ -8,9 +8,10 @@ abstract class MapWithBorders(val width: Int, val height: Int) {
 
         fun isOutOfBounds() = x < 0 || x >= width || y < 0 || y >= height
 
-        fun shiftedX(d: Int) = Place(toBoundedX(x + d), y)
-        fun shiftedY(d: Int) = Place(x, toBoundedY(y + d))
-        fun shifted(dx: Int, dy: Int) = Place(toBoundedX(x + dx), toBoundedY(y + dy))
+        fun shiftedX(d: Int) = Place((x + d), y)
+        fun shiftedY(d: Int) = Place(x, (y + d))
+        fun shifted(dx: Int, dy: Int) = Place((x + dx), (y + dy))
+        fun bounded() = Place(toBoundedX(x), toBoundedY(y))
 
         private fun toBoundedX(t: Int) = Math.max(0, Math.min(t, width - 1))
         private fun toBoundedY(t: Int) = Math.max(0, Math.min(t, height - 1))

@@ -7,9 +7,10 @@ interface Item: StorableObject {
 
 class ItemImpl
 internal constructor (val description: String,
+                      private val inner_weight: Int,
                       val armor: Armor?,
                       val melee: Melee?)
-    : Item {
+    : StorableObjectImpl(inner_weight), Item {
 
     override fun isArmor() = armor != null
     override fun isMelee() = melee != null

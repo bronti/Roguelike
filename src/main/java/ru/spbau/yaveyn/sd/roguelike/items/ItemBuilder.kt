@@ -14,6 +14,6 @@ class ItemBuilder(val weight: Int, val description: String) {
     }
 
     fun build(): Item {
-        return ItemImpl(weight, description, armor, melee)
+        return ItemImpl(description, weight, armor, melee)
     }
 }
