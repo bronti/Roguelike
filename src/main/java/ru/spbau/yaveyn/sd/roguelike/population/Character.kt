@@ -1,29 +1,24 @@
 package ru.spbau.yaveyn.sd.roguelike.population
 
-import ru.spbau.yaveyn.sd.roguelike.dungeon.Dungeon
+import ru.spbau.yaveyn.sd.roguelike.dungeon.OnMapObject
+import ru.spbau.yaveyn.sd.roguelike.dungeon.OnMapObjectImpl
 import ru.spbau.yaveyn.sd.roguelike.dungeon.MapWithBorders
 import ru.spbau.yaveyn.sd.roguelike.dungeon.Tile
-import java.awt.Color
+import ru.spbau.yaveyn.sd.roguelike.items.Container
+import ru.spbau.yaveyn.sd.roguelike.items.StorableObject
+import ru.spbau.yaveyn.sd.roguelike.items.StorableObjectImpl
 
-abstract class Character
-private constructor(override val tile: Tile,
+class Character
+private constructor(val onMapObject: OnMapObject,
+                    private val  innerWeight: Int,
                     private var place: MapWithBorders.Place?,
-                    private var container: Container?): GameObject, Destructable()  {
+                    private var container: Container?)
+    : OnMapObject by onMapObject, Destructable(), StorableObject {
 
-    override fun isOnMap() = place != null
+    override val weight: Int
+        get() = innerWeight //todo: sum weights + weight
 
-    override fun placeTo(p: MapWithBorders.Place): Boolean {
-        place = p
-        container = null
-        return true
-    }
+    constructor(tile: Tile, weight: Int, place: MapWithBorders.Place)
+            : this(OnMapObjectImpl(tile), weight, place, null)
 
-    override fun onMap() = place!!
-
-    override fun pupInto(c: Container): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    constructor(tile: Tile, place: MapWithBorders.Place): this(tile, place, null)
-    constructor(tile: Tile, container: Container): this(tile, null, container)
 }
