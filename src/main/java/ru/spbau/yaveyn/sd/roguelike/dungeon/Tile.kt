@@ -9,7 +9,8 @@ enum class Tile private constructor(val glyph: Char, val color: Color) {
     OUTER('x', AsciiPanel.brightBlack),
     PLAYER_CHARACTER('@', AsciiPanel.brightGreen),
     GOBLIN('g', AsciiPanel.brightRed),
-    BODY('*', AsciiPanel.red);
+    BODY('*', AsciiPanel.red),
+    SACK('.', AsciiPanel.brightGreen);
 
     fun isEmpty() = this == FLOOR
     fun isCreature() = this == PLAYER_CHARACTER || this == GOBLIN

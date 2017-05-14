@@ -5,12 +5,14 @@ class ItemBuilder(val weight: Int, val description: String) {
     private var armor: Armor? = null
     private var melee: Melee? = null
 
-    fun withArmor(armor: Armor) {
+    fun withArmor(armor: Armor): ItemBuilder {
         this.armor = armor
+        return this
     }
 
-    fun withMelee(melee: Melee) {
+    fun withMelee(melee: Melee): ItemBuilder {
         this.melee = melee
+        return this
     }
 
     fun build(): Item {

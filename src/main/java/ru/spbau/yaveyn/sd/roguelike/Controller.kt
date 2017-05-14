@@ -1,6 +1,5 @@
 package ru.spbau.yaveyn.sd.roguelike
 
-import asciiPanel.AsciiFont
 import asciiPanel.AsciiPanel
 import ru.spbau.yaveyn.sd.roguelike.dungeon.generation.makeCaves
 import ru.spbau.yaveyn.sd.roguelike.screen.*

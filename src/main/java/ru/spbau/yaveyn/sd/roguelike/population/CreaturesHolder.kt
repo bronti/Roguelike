@@ -11,7 +11,9 @@ class CreaturesHolder(private val state: GameState) {
 
     init {
         placeCreature(playerCharacter)
-        (1..GOBLINS_COUNT).map { _ -> getGoblin() } .forEach { g -> placeCreature(g) }
+        playerCharacter.addItem(getAllmightyPantsu())
+        playerCharacter.addItem(getSpikedFistArmor())
+        (1..GOBLINS_COUNT).map { _ -> getGoblin() } .forEach { g -> placeCreature(g); g.addItem(getGoblinSword()) }
     }
 
     fun creatureOnPlace(place: MapWithBorders.Place) = creatures.firstOrNull { c -> c.getPlace() == place }
