@@ -16,4 +16,7 @@ class Equipment {
         return melee.fold(h, { h, a -> a.affectHit(h) })
     }
 
+    fun totalAc() = armor.fold(0, { h, a -> h + a.ac})
+    fun totalMc() = melee.fold(0, { h, m -> h + m.mc})
+
 }

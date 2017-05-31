@@ -25,11 +25,16 @@ class DungeonScreen(private val state: GameState) : Screen {
         return topLeft
     }
 
+    private fun boundString(s: String) = s.substring(0, minOf(screenWidth - 1, s.length))
+
     override fun displayOutput(terminal: AsciiPanel) {
         displayTiles(terminal)
-        terminal.write("your health:", 0, screenHeight + 1)
-        terminal.write(state.player.getHealth().toString() + " / " + state.player.maxHealth.toString(), 0, screenHeight + 4)
-        terminal.write("press [escape] to give up this miserable life", 0, screenHeight + 7)
+        terminal.write("your health: ${state.player.getHealth()} / ${state.player.maxHealth}", 0, screenHeight + 1)
+        val equipmentDescr = "equipment: " + state.player.getEquipmentDescription()
+        val statsDescr = "stats: " + state.player.getStatsDescription()
+        terminal.write(boundString(equipmentDescr), 0, screenHeight + 4)
+        terminal.write(boundString(statsDescr), 0, screenHeight + 7)
+        terminal.write("press [escape] to give up this miserable life", 0, screenHeight + 10)
     }
 
     private fun displayTiles(terminal: AsciiPanel) {

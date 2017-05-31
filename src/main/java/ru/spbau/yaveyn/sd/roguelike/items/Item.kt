@@ -5,14 +5,22 @@ interface Item: StorableObject {
     fun isMelee(): Boolean
     fun asArmor(): Armor
     fun asMelee(): Melee
+    fun getDescription(): String
 }
 
 class ItemImpl
-internal constructor (val description: String,
+internal constructor (private val descr: String,
                       private val inner_weight: Int,
                       val armor: Armor?,
                       val melee: Melee?)
     : StorableObjectImpl(inner_weight), Item {
+
+    override fun getDescription(): String {
+        var result = descr + ": "
+        if (isArmor()) result += armor!!.getDescription() + " "
+        if (isMelee()) result += melee!!.getDescription()
+        return result
+    }
 
     override fun isArmor() = armor != null
     override fun asArmor() = armor!!

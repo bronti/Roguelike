@@ -17,6 +17,9 @@ internal constructor(private val state: GameState,
     private val sack = Sack(state)
     private val equipment = Equipment()
 
+    fun getEquipmentDescription() = sack.items.map { it -> it.getDescription() }.joinToString()
+    fun getStatsDescription() = "ac: ${equipment.totalAc()}, mc: ${equipment.totalMc() + battleUnit.mc}"
+
     fun addItem(i: Item): Boolean {
         if (sack.put(i)) {
             if (i.isArmor()) {
