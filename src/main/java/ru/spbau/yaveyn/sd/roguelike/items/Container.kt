@@ -1,7 +1,9 @@
 package ru.spbau.yaveyn.sd.roguelike.items
 
-open class Container(val item: Item, val capacity: Int)
-    : Item by item {
+import ru.spbau.yaveyn.sd.roguelike.dungeon.OnMapObject
+
+open class Container(val onMapObject: OnMapObject, val item: Item, val capacity: Int)
+    : Item by item, OnMapObject by onMapObject {
 
     val items = ArrayList<Item>()
 

@@ -11,7 +11,6 @@ class GameState(val dungeon: Dungeon) {
     fun creatureOnPlace(place: MapWithBorders.Place) = creaturesHolder.creatureOnPlace(place)
     fun dieCreature(creature: Creature) {
         creaturesHolder.removeCreature(creature)
-        dungeon.setTile(creature.getPlace(), creature.tile)
     }
     val player = creaturesHolder.playerCharacter
 }

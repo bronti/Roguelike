@@ -29,6 +29,8 @@ open class OnMapObjectImpl(private val state: GameState, override var tile: Tile
     }
 
     override fun takeFromMap(): Boolean {
+        if (place == null) return false
+        state.dungeon.setTile(place!!, Tile.FLOOR)
         place = null
         return true
     }

@@ -14,7 +14,7 @@ internal constructor(private val state: GameState,
                      private val innerWeight: Int)
     : OnMapObject by onMapObject, BattleUnit by battleUnit, StorableObjectImpl(innerWeight) {
 
-    private val sack = Sack()
+    private val sack = Sack(state)
     private val equipment = Equipment()
 
     fun addItem(i: Item): Boolean {
@@ -55,7 +55,9 @@ internal constructor(private val state: GameState,
 
     fun checkedDie() {
         if (isDestructed()) {
-            onMapObject.tile = Tile.BODY
+            val place = onMapObject.getPlace()
+            onMapObject.takeFromMap()
+            sack.placeTo(place)
             state.dieCreature(this)
         }
     }
