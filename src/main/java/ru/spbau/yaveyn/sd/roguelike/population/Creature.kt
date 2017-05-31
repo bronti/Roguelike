@@ -6,6 +6,7 @@ import ru.spbau.yaveyn.sd.roguelike.dungeon.Tile
 import ru.spbau.yaveyn.sd.roguelike.dungeon.OnMapObject
 import ru.spbau.yaveyn.sd.roguelike.items.Item
 import ru.spbau.yaveyn.sd.roguelike.items.StorableObjectImpl
+import java.util.*
 
 open class Creature
 internal constructor(private val state: GameState,
@@ -16,6 +17,8 @@ internal constructor(private val state: GameState,
 
     private val sack = Sack(state)
     private val equipment = Equipment()
+
+    val random = Random()
 
     fun getEquipmentDescription() = sack.items.map { it -> it.getDescription() }.joinToString()
     fun getStatsDescription() = "ac: ${equipment.totalAc()}, mc: ${equipment.totalMc() + battleUnit.mc}"
@@ -39,9 +42,11 @@ internal constructor(private val state: GameState,
     override val weight: Int
         get() = innerWeight //todo: add stuff
 
+    private fun canMoveTo(newPlace: MapWithBorders.Place) = state.dungeon.tile(newPlace).isEmpty()
+
     fun moveTo(newPlace: MapWithBorders.Place) {
         if (isDestructed()) return
-        if (state.dungeon.tile(newPlace).isEmpty()) {
+        if (canMoveTo(newPlace)) {
             if (onMapObject.placeTo(newPlace)) {
                 takeFromContainer()
             }
@@ -51,9 +56,43 @@ internal constructor(private val state: GameState,
             val other = state.creatureOnPlace(newPlace)!!
             other.takeHit(makeHit())
             other.checkedDie()
-            takeHit(other.makeHit())
-            checkedDie()
+//            takeHit(other.makeHit())
+//            checkedDie()
         }
+    }
+
+    fun moveToPlayer() {
+        val target = state.player.getPlace()
+        if (!isOnMap()) return
+
+        val top = getPlace().shiftedY(1)
+        val bot = getPlace().shiftedY(-1)
+        val left = getPlace().shiftedX(-1)
+        val right = getPlace().shiftedX(1)
+
+        when (target) {
+            top -> {
+                moveTo(top)
+                return
+            }
+            bot -> {
+                moveTo(bot)
+                return
+            }
+            left -> {
+                moveTo(left)
+                return
+            }
+            right -> {
+                moveTo(right)
+                return
+            }
+        }
+
+        val dests = listOf(top, bot, left, right)
+
+        val goto = dests[random.nextInt(4)]
+        if (canMoveTo(goto)) moveTo(goto)
     }
 
     fun checkedDie() {

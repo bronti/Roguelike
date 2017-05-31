@@ -1,6 +1,7 @@
 package ru.spbau.yaveyn.sd.roguelike
 
 import asciiPanel.AsciiPanel
+import ru.spbau.yaveyn.sd.roguelike.dungeon.MapWithBorders
 import ru.spbau.yaveyn.sd.roguelike.dungeon.generation.makeCaves
 import ru.spbau.yaveyn.sd.roguelike.screen.*
 import java.awt.event.KeyEvent
@@ -17,6 +18,11 @@ class Controller(private val repaint:() -> Unit): KeyListener {
 
     private var screen: Screen = WelcomeScreen()
 
+    private fun makeMove(dest: MapWithBorders.Place) {
+        state.player.moveTo(dest)
+        state.npcs.forEach { it.moveToPlayer() }
+    }
+
     override fun keyPressed(key: KeyEvent) {
         screen = when (screen) {
             is WelcomeScreen -> StartScreen()
@@ -27,11 +33,13 @@ class Controller(private val repaint:() -> Unit): KeyListener {
             is DungeonScreen -> {
                 val dungeonScreen = screen as DungeonScreen
                 when (key.keyCode) {
-                    KeyEvent.VK_LEFT   -> state.player.moveTo(dungeonScreen.center().shiftedX(-1))
-                    KeyEvent.VK_RIGHT  -> state.player.moveTo(dungeonScreen.center().shiftedX(1))
-                    KeyEvent.VK_UP     -> state.player.moveTo(dungeonScreen.center().shiftedY(-1))
-                    KeyEvent.VK_DOWN   -> state.player.moveTo(dungeonScreen.center().shiftedY(1))
+                    KeyEvent.VK_LEFT   -> makeMove(dungeonScreen.center().shiftedX(-1))
+                    KeyEvent.VK_RIGHT  -> makeMove(dungeonScreen.center().shiftedX(1))
+                    KeyEvent.VK_UP     -> makeMove(dungeonScreen.center().shiftedY(-1))
+                    KeyEvent.VK_DOWN   -> makeMove(dungeonScreen.center().shiftedY(1))
+//                    else ->
                 }
+
                 if (state.player.isDestructed()) {
                     GameOverScreen(false)
                 }

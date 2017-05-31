@@ -13,4 +13,6 @@ class GameState(val dungeon: Dungeon) {
         creaturesHolder.removeCreature(creature)
     }
     val player = creaturesHolder.playerCharacter
+    val npcs: List<Creature>
+        get() = creaturesHolder.creatures.filter { it != player }
 }
