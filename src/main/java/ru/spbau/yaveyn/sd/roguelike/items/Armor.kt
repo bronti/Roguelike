@@ -8,6 +8,6 @@ class Armor(val ac: Int) {
         return Hit(Math.max(0, input.smashing - ac))
     }
 
-    fun getDescription(): String = "ac + $ac"
+    fun getDescription(): String = "ac +$ac"
 
 }

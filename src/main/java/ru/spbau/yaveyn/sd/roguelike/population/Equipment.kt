@@ -1,15 +1,26 @@
 package ru.spbau.yaveyn.sd.roguelike.population
 
 import ru.spbau.yaveyn.sd.roguelike.items.Armor
+import ru.spbau.yaveyn.sd.roguelike.items.Item
 import ru.spbau.yaveyn.sd.roguelike.items.Melee
 
 class Equipment {
 
-    val armor = ArrayList<Armor>()
-    val melee = ArrayList<Melee>()
+    private val armor = HashSet<Armor>()
+    private val melee = HashSet<Melee>()
 
     fun useArmor(h: Hit): Hit {
         return armor.fold(h, { h, a -> a.affectHit(h) })
+    }
+
+    fun removeItem(item: Item) {
+        if (item.isMelee()) melee.remove(item.asMelee())
+        if (item.isArmor()) armor.remove(item.asArmor())
+    }
+
+    fun addItem(item: Item) {
+        if (item.isMelee()) melee.add(item.asMelee())
+        if (item.isArmor()) armor.add(item.asArmor())
     }
 
     fun useMelee(h: Hit): Hit {

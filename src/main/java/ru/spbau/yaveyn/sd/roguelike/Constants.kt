@@ -12,6 +12,7 @@ val notesHeight = 20
 
 val ITERS_COUNT_FOR_CAVE_DUNGEON_GENERATION = 20
 val GOBLINS_COUNT = 100
+val GOBLIN_DESCR = "Filthy little goblin"
 
 val GOBLIN_WEIGHT = 10
 val PLAYER_WEIGHT  = 70

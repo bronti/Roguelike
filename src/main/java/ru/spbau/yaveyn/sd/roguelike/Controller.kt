@@ -3,6 +3,7 @@ package ru.spbau.yaveyn.sd.roguelike
 import asciiPanel.AsciiPanel
 import ru.spbau.yaveyn.sd.roguelike.dungeon.MapWithBorders
 import ru.spbau.yaveyn.sd.roguelike.dungeon.generation.makeCaves
+import ru.spbau.yaveyn.sd.roguelike.items.Container
 import ru.spbau.yaveyn.sd.roguelike.screen.*
 import java.awt.event.KeyEvent
 import java.awt.event.KeyListener
@@ -21,6 +22,7 @@ class Controller(private val repaint:() -> Unit): KeyListener {
     private fun makeMove(dest: MapWithBorders.Place) {
         state.player.moveTo(dest)
         state.npcs.forEach { it.moveToPlayer() }
+        state.player.watchAt(dest)
     }
 
     override fun keyPressed(key: KeyEvent) {
@@ -31,21 +33,34 @@ class Controller(private val repaint:() -> Unit): KeyListener {
                 DungeonScreen(state)
             }
             is DungeonScreen -> {
-                val dungeonScreen = screen as DungeonScreen
-                when (key.keyCode) {
-                    KeyEvent.VK_LEFT   -> makeMove(dungeonScreen.center().shiftedX(-1))
-                    KeyEvent.VK_RIGHT  -> makeMove(dungeonScreen.center().shiftedX(1))
-                    KeyEvent.VK_UP     -> makeMove(dungeonScreen.center().shiftedY(-1))
-                    KeyEvent.VK_DOWN   -> makeMove(dungeonScreen.center().shiftedY(1))
-//                    else ->
-                }
-
-                if (state.player.isDestructed()) {
+                if (state.player.isDestructed() || key.keyCode == KeyEvent.VK_ESCAPE) {
                     GameOverScreen(false)
                 }
-                else when (key.keyCode) {
-                    KeyEvent.VK_ESCAPE -> GameOverScreen(false)
-                    else               -> screen
+                else {
+                    val dungeonScreen = screen as DungeonScreen
+                    when (key.keyCode) {
+                        KeyEvent.VK_A -> makeMove(dungeonScreen.center().shiftedX(-1))
+                        KeyEvent.VK_D -> makeMove(dungeonScreen.center().shiftedX(1))
+                        KeyEvent.VK_W -> makeMove(dungeonScreen.center().shiftedY(-1))
+                        KeyEvent.VK_S -> makeMove(dungeonScreen.center().shiftedY(1))
+                        KeyEvent.VK_DOWN  -> state.player.watchAt(dungeonScreen.center().shiftedY(1))
+                        KeyEvent.VK_UP    -> state.player.watchAt(dungeonScreen.center().shiftedY(-1))
+                        KeyEvent.VK_LEFT  -> state.player.watchAt(dungeonScreen.center().shiftedX(-1))
+                        KeyEvent.VK_RIGHT -> state.player.watchAt(dungeonScreen.center().shiftedX(1))
+                        KeyEvent.VK_I -> state.player.scrollSack()
+                        KeyEvent.VK_G -> state.player.getItem()
+                        KeyEvent.VK_C -> {
+                            val cont = state.onPlace(state.player.watchingTo!!)
+                            if (cont != null && cont is Container) {
+                                cont.scroll()
+                            }
+                        }
+                        KeyEvent.VK_L -> {
+                            state.player.dropItem()
+                        }
+                    }
+
+                    dungeonScreen
                 }
             }
             is GameOverScreen ->

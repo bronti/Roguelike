@@ -29,12 +29,31 @@ class DungeonScreen(private val state: GameState) : Screen {
 
     override fun displayOutput(terminal: AsciiPanel) {
         displayTiles(terminal)
-        terminal.write("your health: ${state.player.getHealth()} / ${state.player.maxHealth}", 0, screenHeight + 1)
-        val equipmentDescr = "equipment: " + state.player.getEquipmentDescription()
-        val statsDescr = "stats: " + state.player.getStatsDescription()
-        terminal.write(boundString(equipmentDescr), 0, screenHeight + 4)
-        terminal.write(boundString(statsDescr), 0, screenHeight + 7)
-        terminal.write("press [escape] to give up this miserable life", 0, screenHeight + 10)
+        if (state.player.isDestructed()) {
+            displayDeadInfo(terminal)
+        }
+        else {
+            displayAliveInfo(terminal)
+        }
+    }
+
+    private fun displayDeadInfo(terminal: AsciiPanel) {
+        terminal.write("YOU ARE DEAD! MWAHAHA!! (press any key to continue)", 0, screenHeight + 1)
+    }
+
+    private fun displayAliveInfo(terminal: AsciiPanel) {
+        val equipmentDescr = "equipment: ${state.player.getSackDescription()}"
+        val statsDescr = "stats: ${state.player.getStatsDescription()}"
+        val healthDescr = "health: ${state.player.getHealtDescription()}"
+        terminal.write(boundString("$healthDescr; $statsDescr"), 0, screenHeight + 1)
+        terminal.write(boundString(equipmentDescr), 0, screenHeight + 3)
+        terminal.write("--------------------------------------------------------------------------------", 0, screenHeight + 5)
+        terminal.write(boundString("view: ${state.player.view}"), 0, screenHeight + 7)
+        terminal.write("--------------------------------------------------------------------------------", 0, screenHeight + 9)
+        terminal.write("[wasd] to move; arrows to watch;", 0, screenHeight + 11)
+        terminal.write("[i] to scroll equipment; [c] to scroll container you watching at;", 0, screenHeight + 13)
+        terminal.write("[l] to drop current item into container; [g] to get item from container;", 0, screenHeight + 15)
+        terminal.write("[escape] to give up this miserable life.", 0, screenHeight + 17)
     }
 
     private fun displayTiles(terminal: AsciiPanel) {

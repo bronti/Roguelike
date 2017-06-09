@@ -16,10 +16,11 @@ internal constructor (private val descr: String,
     : StorableObjectImpl(inner_weight), Item {
 
     override fun getDescription(): String {
-        var result = descr + ": "
-        if (isArmor()) result += armor!!.getDescription() + " "
-        if (isMelee()) result += melee!!.getDescription()
-        return result
+        var stats = emptyList<String>()
+        if (isArmor()) stats += armor!!.getDescription()
+        if (isMelee()) stats += melee!!.getDescription()
+
+        return "$descr: ${stats.joinToString(", ")}"
     }
 
     override fun isArmor() = armor != null

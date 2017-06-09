@@ -2,35 +2,40 @@ package ru.spbau.yaveyn.sd.roguelike.population
 
 import ru.spbau.yaveyn.sd.roguelike.GameState
 import ru.spbau.yaveyn.sd.roguelike.dungeon.MapWithBorders
-import ru.spbau.yaveyn.sd.roguelike.dungeon.Tile
 import ru.spbau.yaveyn.sd.roguelike.dungeon.OnMapObject
 import ru.spbau.yaveyn.sd.roguelike.items.Item
 import ru.spbau.yaveyn.sd.roguelike.items.StorableObjectImpl
 import java.util.*
 
 open class Creature
-internal constructor(private val state: GameState,
-                     private val battleUnit: BattleUnit,
-                     private val onMapObject: OnMapObject,
-                     private val innerWeight: Int)
+internal constructor(protected val state: GameState,
+                     protected val battleUnit: BattleUnit,
+                     protected val onMapObject: OnMapObject,
+                     protected val innerWeight: Int,
+                     private val description: String)
     : OnMapObject by onMapObject, BattleUnit by battleUnit, StorableObjectImpl(innerWeight) {
 
-    private val sack = Sack(state)
-    private val equipment = Equipment()
+    protected var sack = Sack(state)
+    protected val equipment = Equipment()
 
-    val random = Random()
+    private val random = Random()
 
-    fun getEquipmentDescription() = sack.items.map { it -> it.getDescription() }.joinToString()
-    fun getStatsDescription() = "ac: ${equipment.totalAc()}, mc: ${equipment.totalMc() + battleUnit.mc}"
+    fun dropSack(): Sack {
+        val result = sack
+        sack = Sack(state)
+        return result
+    }
+
+    fun getSackDescription() = sack.getCurrentItemDescription()
+    fun getStatsDescription() = "ac = ${equipment.totalAc()}, mc = ${equipment.totalMc() + battleUnit.mc}"
+    fun getHealtDescription() = "${getHealth()} / $maxHealth"
+    fun getDescription() = "$description, health: ${getHealtDescription()}"
+
+    fun scrollSack() = sack.scroll()
 
     fun addItem(i: Item): Boolean {
         if (sack.put(i)) {
-            if (i.isArmor()) {
-                equipment.armor.add(i.asArmor())
-            }
-            if (i.isMelee()) {
-                equipment.melee.add(i.asMelee())
-            }
+            equipment.addItem(i)
             return true
         }
         return false
@@ -62,6 +67,7 @@ internal constructor(private val state: GameState,
     }
 
     fun moveToPlayer() {
+        if (state.player.isDestructed()) return
         val target = state.player.getPlace()
         if (!isOnMap()) return
 
@@ -95,7 +101,7 @@ internal constructor(private val state: GameState,
         if (canMoveTo(goto)) moveTo(goto)
     }
 
-    fun checkedDie() {
+    open fun checkedDie() {
         if (isDestructed()) {
             val place = onMapObject.getPlace()
             onMapObject.takeFromMap()

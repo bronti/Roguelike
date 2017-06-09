@@ -46,10 +46,15 @@
     </build>
 
     <dependencies>
+        <!--<dependency>-->
+        <!--<groupId>com.github.trystan</groupId>-->
+        <!--<artifactId>ascii-panel</artifactId>-->
+        <!--<version>master-SNAPSHOT</version>-->
+        <!--</dependency>-->
         <dependency>
-            <groupId>net.trystan</groupId>
-            <artifactId>ascii-panel</artifactId>
-            <version>1.2-SNAPSHOT</version>
+        <groupId>net.trystan</groupId>
+        <artifactId>ascii-panel</artifactId>
+        <version>1.2-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>

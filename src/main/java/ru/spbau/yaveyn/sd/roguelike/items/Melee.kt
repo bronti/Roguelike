@@ -8,5 +8,5 @@ class Melee(val mc: Int) {
         return Hit(Math.max(0, input.smashing + mc))
     }
 
-    fun getDescription(): String = "mc + $mc"
+    fun getDescription(): String = "mc +$mc"
 }

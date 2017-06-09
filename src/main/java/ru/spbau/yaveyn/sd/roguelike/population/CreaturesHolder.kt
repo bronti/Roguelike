@@ -2,12 +2,15 @@ package ru.spbau.yaveyn.sd.roguelike.population
 
 import ru.spbau.yaveyn.sd.roguelike.*
 import ru.spbau.yaveyn.sd.roguelike.dungeon.MapWithBorders
+import ru.spbau.yaveyn.sd.roguelike.dungeon.OnMapObject
 import ru.spbau.yaveyn.sd.roguelike.dungeon.Tile
 import ru.spbau.yaveyn.sd.roguelike.dungeon.OnMapObjectImpl
+import ru.spbau.yaveyn.sd.roguelike.items.Container
 
 class CreaturesHolder(private val state: GameState) {
     val playerCharacter: PlayerCharacter = PlayerCharacter(state, playerBattleUnit(), OnMapObjectImpl(state, Tile.PLAYER_CHARACTER))
     val creatures: ArrayList<Creature> = ArrayList()
+    val containers: ArrayList<Container> = ArrayList()
 
     init {
         placeCreature(playerCharacter)
@@ -17,9 +20,11 @@ class CreaturesHolder(private val state: GameState) {
     }
 
     fun creatureOnPlace(place: MapWithBorders.Place) = creatures.firstOrNull { c -> c.getPlace() == place }
+    fun onPlace(place: MapWithBorders.Place): OnMapObject? =
+            containers.firstOrNull { c -> c.getPlace() == place } ?: creatureOnPlace(place)
     fun removeCreature(creature: Creature) = creatures.remove(creature)
 
-    private fun getGoblin() = Creature(state, goblinBattleUnit(), OnMapObjectImpl(state, Tile.GOBLIN), GOBLIN_WEIGHT)
+    private fun getGoblin() = Creature(state, goblinBattleUnit(), OnMapObjectImpl(state, Tile.GOBLIN), GOBLIN_WEIGHT, GOBLIN_DESCR)
 
     private fun placeCreature(creature: Creature) {
         val place = getEmptyPlace()
