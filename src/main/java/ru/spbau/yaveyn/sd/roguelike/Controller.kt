@@ -7,9 +7,12 @@ import ru.spbau.yaveyn.sd.roguelike.items.Container
 import ru.spbau.yaveyn.sd.roguelike.screen.*
 import java.awt.event.KeyEvent
 import java.awt.event.KeyListener
+import java.util.logging.Level
+import java.util.logging.Logger
 import kotlin.system.exitProcess
 
 class Controller(private val repaint:() -> Unit): KeyListener {
+    private val logger = Logger.getLogger(Controller::class.java.name)
 
     val mapWidth  = 100
     val mapHeight = 100
@@ -30,10 +33,16 @@ class Controller(private val repaint:() -> Unit): KeyListener {
             is WelcomeScreen -> StartScreen()
             is StartScreen   -> {
                 state = GameState(makeCaves(mapWidth, mapHeight))
+                logger.log(Level.INFO, "Game started.")
                 DungeonScreen(state)
             }
             is DungeonScreen -> {
-                if (state.player.isDestructed() || key.keyCode == KeyEvent.VK_ESCAPE) {
+                if (state.player.isDestructed()) {
+                    logger.log(Level.INFO, "Game over because of player death.")
+                    GameOverScreen(false)
+                }
+                else if (key.keyCode == KeyEvent.VK_ESCAPE) {
+                    logger.log(Level.INFO, "Game over because of [escape] hit.")
                     GameOverScreen(false)
                 }
                 else {
