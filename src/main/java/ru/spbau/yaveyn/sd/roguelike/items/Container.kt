@@ -1,6 +1,7 @@
 package ru.spbau.yaveyn.sd.roguelike.items
 
 import ru.spbau.yaveyn.sd.roguelike.dungeon.OnMapObject
+import javax.lang.model.util.ElementFilter
 
 open class Container(val onMapObject: OnMapObject, val item: Item, val capacity: Int)
     : Item by item, OnMapObject by onMapObject {
@@ -27,6 +28,10 @@ open class Container(val onMapObject: OnMapObject, val item: Item, val capacity:
             field = i % items.size
             if (field < 0) field += items.size
         }
+        get() {
+            activeItemIndex = field
+            return field
+        }
 
     val activeItem
         get() = items.getOrNull(activeItemIndex)
@@ -47,7 +52,6 @@ open class Container(val onMapObject: OnMapObject, val item: Item, val capacity:
             items[activeItemIndex].getDescription()
         }
     }
-
 
     fun scroll() {
         activeItemIndex += 1

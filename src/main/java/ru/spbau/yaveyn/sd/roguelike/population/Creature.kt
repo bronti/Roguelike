@@ -18,6 +18,12 @@ internal constructor(protected val state: GameState,
     protected var sack = Sack(state)
     protected val equipment = Equipment()
 
+    override val mc: Int
+        get() = battleUnit.mc + equipment.totalMc()
+
+    override val ac: Int
+        get() = battleUnit.ac + equipment.totalAc()
+
     private val random = Random()
 
     fun dropSack(): Sack {
@@ -27,9 +33,9 @@ internal constructor(protected val state: GameState,
     }
 
     fun getSackDescription() = sack.getCurrentItemDescription()
-    fun getStatsDescription() = "ac = ${equipment.totalAc()}, mc = ${equipment.totalMc() + battleUnit.mc}"
-    fun getHealtDescription() = "${getHealth()} / $maxHealth"
-    fun getDescription() = "$description, health: ${getHealtDescription()}"
+    fun getStatsDescription() = "ac = $ac, mc = $mc"
+    fun getHealthDescription() = "$health / $maxHealth"
+    fun getDescription() = "$description, health: ${getHealthDescription()}"
 
     fun scrollSack() = sack.scroll()
 
@@ -41,11 +47,16 @@ internal constructor(protected val state: GameState,
         return false
     }
 
+    fun removeActiveItem(): Boolean {
+        equipment.removeItem(sack.aquireActiveItem()!!)
+        return true
+    }
+
     override fun makeHit() = equipment.useMelee(battleUnit.makeHit())
     override fun takeHit(hit: Hit) = battleUnit.takeHit(equipment.useArmor(hit))
 
     override val weight: Int
-        get() = innerWeight //todo: add stuff
+        get() = innerWeight + sack.weight
 
     private fun canMoveTo(newPlace: MapWithBorders.Place) = state.dungeon.tile(newPlace).isEmpty()
 
@@ -55,14 +66,11 @@ internal constructor(protected val state: GameState,
             if (onMapObject.placeTo(newPlace)) {
                 takeFromContainer()
             }
-            // todo: storable on map
         }
         else if (state.dungeon.tile(newPlace).isCreature()) {
             val other = state.creatureOnPlace(newPlace)!!
             other.takeHit(makeHit())
             other.checkedDie()
-//            takeHit(other.makeHit())
-//            checkedDie()
         }
     }
 

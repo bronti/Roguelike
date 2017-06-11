@@ -1,11 +1,8 @@
 package ru.spbau.yaveyn.sd.roguelike.screen
 
-import java.awt.event.KeyEvent
 import asciiPanel.AsciiPanel
 import ru.spbau.yaveyn.sd.roguelike.GameState
-import ru.spbau.yaveyn.sd.roguelike.dungeon.Dungeon
 import ru.spbau.yaveyn.sd.roguelike.dungeon.MapWithBorders
-import ru.spbau.yaveyn.sd.roguelike.population.CreaturesHolder
 import ru.spbau.yaveyn.sd.roguelike.screenHeight
 import ru.spbau.yaveyn.sd.roguelike.screenWidth
 
@@ -44,7 +41,7 @@ class DungeonScreen(private val state: GameState) : Screen {
     private fun displayAliveInfo(terminal: AsciiPanel) {
         val equipmentDescr = "equipment: ${state.player.getSackDescription()}"
         val statsDescr = "stats: ${state.player.getStatsDescription()}"
-        val healthDescr = "health: ${state.player.getHealtDescription()}"
+        val healthDescr = "health: ${state.player.getHealthDescription()}"
         terminal.write(boundString("$healthDescr; $statsDescr"), 0, screenHeight + 1)
         terminal.write(boundString(equipmentDescr), 0, screenHeight + 3)
         terminal.write("--------------------------------------------------------------------------------", 0, screenHeight + 5)

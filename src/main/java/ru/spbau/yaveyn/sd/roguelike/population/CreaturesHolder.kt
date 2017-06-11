@@ -9,8 +9,10 @@ import ru.spbau.yaveyn.sd.roguelike.items.Container
 
 class CreaturesHolder(private val state: GameState) {
     val playerCharacter: PlayerCharacter = PlayerCharacter(state, playerBattleUnit(), OnMapObjectImpl(state, Tile.PLAYER_CHARACTER))
-    val creatures: ArrayList<Creature> = ArrayList()
-    val containers: ArrayList<Container> = ArrayList()
+    private val creatures: ArrayList<Creature> = ArrayList()
+    private val containers: ArrayList<Container> = ArrayList()
+    val npcs
+        get() = creatures.filter { it != this.playerCharacter }
 
     init {
         placeCreature(playerCharacter)
@@ -22,7 +24,10 @@ class CreaturesHolder(private val state: GameState) {
     fun creatureOnPlace(place: MapWithBorders.Place) = creatures.firstOrNull { c -> c.getPlace() == place }
     fun onPlace(place: MapWithBorders.Place): OnMapObject? =
             containers.firstOrNull { c -> c.getPlace() == place } ?: creatureOnPlace(place)
-    fun removeCreature(creature: Creature) = creatures.remove(creature)
+    fun removeCreature(creature: Creature) {
+        creatures.remove(creature)
+        containers.add(creature.dropSack())
+    }
 
     private fun getGoblin() = Creature(state, goblinBattleUnit(), OnMapObjectImpl(state, Tile.GOBLIN), GOBLIN_WEIGHT, GOBLIN_DESCR)
 

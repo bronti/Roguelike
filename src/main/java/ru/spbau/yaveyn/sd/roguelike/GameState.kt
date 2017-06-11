@@ -13,7 +13,6 @@ class GameState(val dungeon: Dungeon) {
     fun onPlace(place: MapWithBorders.Place) = creaturesHolder.onPlace(place)
     fun dieCreature(creature: Creature) {
         creaturesHolder.removeCreature(creature)
-        creaturesHolder.containers.add(creature.dropSack())
     }
 
     fun watchAt(place: MapWithBorders.Place): String {
@@ -27,5 +26,5 @@ class GameState(val dungeon: Dungeon) {
 
     val player = creaturesHolder.playerCharacter
     val npcs: List<Creature>
-        get() = creaturesHolder.creatures.filter { it != player }
+        get() = creaturesHolder.npcs
 }

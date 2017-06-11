@@ -36,7 +36,7 @@ class PlayerCharacter (state: GameState, battleUnit: BattleUnit, onMapObject: On
         if (container == null || container !is Container) return
         if (sack.activeItem == null) return
         if (container.put(sack.activeItem!!)) {
-            equipment.removeItem(sack.aquireActiveItem()!!)
+            removeActiveItem()
         }
     }
 
