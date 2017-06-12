@@ -22,10 +22,19 @@ class ObjectsHolder(private val state: GameState) {
         playerCharacter.addItem(getSpikedFistArmor())
         (1..GOBLINS_COUNT).map { _ -> getGoblin() } .forEach { g -> placeCreature(g); g.addItem(getGoblinSword()) }
     }
-
+    /**
+     * Get creature on the given place.
+     */
     fun creatureOnPlace(place: MapWithBorders.Place) = creatures.firstOrNull { c -> c.getPlace() == place }
+    /**
+     * Get object on the given place.
+     */
     fun onPlace(place: MapWithBorders.Place): OnMapObject? =
             containers.firstOrNull { c -> c.getPlace() == place } ?: creatureOnPlace(place)
+
+    /**
+     * Remove creature.
+     */
     fun removeCreature(creature: Creature) {
         creatures.remove(creature)
         containers.add(creature.dropSack())

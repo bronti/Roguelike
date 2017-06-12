@@ -11,6 +11,9 @@ import java.util.logging.Level
 import java.util.logging.Logger
 import kotlin.system.exitProcess
 
+/**
+ * Controller.
+ */
 class Controller(private val repaint:() -> Unit): KeyListener {
     private val logger = Logger.getLogger(Controller::class.java.name)
 
@@ -28,6 +31,9 @@ class Controller(private val repaint:() -> Unit): KeyListener {
         state.player.watchAt(dest)
     }
 
+    /**
+     * React on key pressed.
+     */
     override fun keyPressed(key: KeyEvent) {
         screen = when (screen) {
             is StartScreen   -> {

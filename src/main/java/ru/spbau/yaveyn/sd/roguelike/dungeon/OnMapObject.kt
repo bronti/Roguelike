@@ -2,12 +2,29 @@ package ru.spbau.yaveyn.sd.roguelike.dungeon
 
 import ru.spbau.yaveyn.sd.roguelike.GameState
 
+/**
+ * Object with it's place on the map.
+ */
 interface OnMapObject {
+
+    /**
+     * Visual representation of the object.
+     */
     var tile: Tile
 
+    /**
+     *Checks whether this object is placed on the map.
+     */
     fun isOnMap(): Boolean
 
+    /**
+     * Place object into a given place.
+     */
     fun placeTo(newPlace: MapWithBorders.Place): Boolean
+
+    /**
+     * Remove object from the map.
+     */
     fun takeFromMap(): Boolean
 
     fun getPlace(): MapWithBorders.Place

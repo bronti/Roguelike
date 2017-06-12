@@ -10,6 +10,9 @@ import java.util.*
 import java.util.logging.Level
 import java.util.logging.Logger
 
+/**
+ * NPC
+ */
 class NonPlayerCharacter (state: GameState,
                           battleUnit: BattleUnit,
                           onMapObject: OnMapObject,
@@ -19,6 +22,9 @@ class NonPlayerCharacter (state: GameState,
 
     private val random = Random()
 
+    /**
+     * Attack player if it is possible. Otherwise move in random direction.
+     */
     fun moveToPlayer() {
         if (state.player.isDestructed()) return
         val target = state.player.getPlace()

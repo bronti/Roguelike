@@ -6,6 +6,9 @@ import javax.swing.JFrame
 import asciiPanel.AsciiPanel
 
 
+/**
+ * Main class.
+ */
 class ApplicationMain : JFrame() {
     private var terminal: AsciiPanel = AsciiPanel(screenWidth, screenHeight + notesHeight, AsciiFont.TALRYTH_15_15)
     private val controller: Controller = Controller { repaint() }

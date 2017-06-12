@@ -4,6 +4,9 @@ import ru.spbau.yaveyn.sd.roguelike.items.Armor
 import ru.spbau.yaveyn.sd.roguelike.items.Item
 import ru.spbau.yaveyn.sd.roguelike.items.Melee
 
+/**
+ * Armor and weapons.
+ */
 class Equipment {
 
     private val armor = HashSet<Armor>()
@@ -19,10 +22,16 @@ class Equipment {
         if (item.isArmor()) armor.add(item.asArmor())
     }
 
+    /**
+     * Affect incoming hit by the armor.
+     */
     fun useArmor(h: Hit): Hit {
         return armor.fold(h, { h, a -> a.affectHit(h) })
     }
 
+    /**
+     * Affect outgoing hit by weapons.
+     */
     fun useMelee(h: Hit): Hit {
         return melee.fold(h, { h, a -> a.affectHit(h) })
     }

@@ -2,6 +2,9 @@ package ru.spbau.yaveyn.sd.roguelike.items
 
 import ru.spbau.yaveyn.sd.roguelike.dungeon.OnMapObject
 
+/**
+ * Container with items.
+ */
 open class Container(val onMapObject: OnMapObject, val item: Item, val capacity: Int)
     : Item by item, OnMapObject by onMapObject {
 
@@ -10,6 +13,9 @@ open class Container(val onMapObject: OnMapObject, val item: Item, val capacity:
     override val weight: Int
         get() = item.weight + items.sumBy(Item::weight)
 
+    /**
+     * Put item into container.
+     */
     fun put(i: Item): Boolean {
         if (i.putInto(this)) {
             items.add(i)
@@ -32,9 +38,16 @@ open class Container(val onMapObject: OnMapObject, val item: Item, val capacity:
             return field
         }
 
+    /**
+     * Active item (this item is shown on description
+     * + player can get this item from the container by pressing g while looking at this container).
+     */
     val activeItem
         get() = items.getOrNull(activeItemIndex)
 
+    /**
+     * Extract active item from container.
+     */
     fun aquireActiveItem(): Item? {
         val result = activeItem
         if (result != null) {
@@ -52,6 +65,9 @@ open class Container(val onMapObject: OnMapObject, val item: Item, val capacity:
         }
     }
 
+    /**
+     * Change active item to the next item.
+     */
     fun scroll() {
         activeItemIndex += 1
     }

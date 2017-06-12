@@ -5,8 +5,11 @@ import ru.spbau.yaveyn.sd.roguelike.dungeon.MapWithBorders
 import ru.spbau.yaveyn.sd.roguelike.dungeon.OnMapObject
 import ru.spbau.yaveyn.sd.roguelike.items.Item
 import ru.spbau.yaveyn.sd.roguelike.items.StorableObjectImpl
-import java.util.*
 
+
+/**
+ * Character.
+ */
 open class Creature
 internal constructor(protected val state: GameState,
                      protected val battleUnit: BattleUnit,
@@ -24,6 +27,9 @@ internal constructor(protected val state: GameState,
     override val ac: Int
         get() = battleUnit.ac + equipment.totalAc()
 
+    /**
+     * Drop sack.
+     */
     fun dropSack(): Sack {
         val result = sack
         sack = Sack(state)
@@ -35,8 +41,14 @@ internal constructor(protected val state: GameState,
     fun getHealthDescription() = "$health / $maxHealth"
     fun getDescription() = "$description, health: ${getHealthDescription()}"
 
+    /**
+     * Change active item in sack.
+     */
     fun scrollSack() = sack.scroll()
 
+    /**
+     * Add item to sack (and equipment).
+     */
     fun addItem(i: Item): Boolean {
         if (sack.put(i)) {
             equipment.addItem(i)
@@ -45,6 +57,9 @@ internal constructor(protected val state: GameState,
         return false
     }
 
+    /**
+     * Remove active item from sack.
+     */
     fun removeActiveItem(): Boolean {
         equipment.removeItem(sack.aquireActiveItem()!!)
         return true
@@ -58,6 +73,9 @@ internal constructor(protected val state: GameState,
 
     protected fun canMoveTo(newPlace: MapWithBorders.Place) = state.dungeon.tile(newPlace).isEmpty()
 
+    /**
+     * Move to given place (or attack if this place is taken by an enemy.
+     */
     fun moveTo(newPlace: MapWithBorders.Place) {
         if (isDestructed()) return
         if (canMoveTo(newPlace)) {

@@ -1,9 +1,20 @@
 package ru.spbau.yaveyn.sd.roguelike.items
 
+/**
+ * Item.
+ */
 interface Item: StorableObject {
     fun isArmor(): Boolean
     fun isMelee(): Boolean
+
+    /**
+     * Return corresponding armor.
+     */
     fun asArmor(): Armor
+
+    /**
+     * Return corresponding melee weapon.
+     */
     fun asMelee(): Melee
     fun getDescription(): String
 }

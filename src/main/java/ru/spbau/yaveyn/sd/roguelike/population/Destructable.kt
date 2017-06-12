@@ -1,9 +1,21 @@
 package ru.spbau.yaveyn.sd.roguelike.population
 
+/**
+ * Destructable object.
+ */
 interface Destructable {
+    /**
+     * Maximum amount of health.
+     */
     val maxHealth: Int
+    /**
+     * Current amount of health.
+     */
     val health: Int
     fun isDestructed(): Boolean
+    /**
+     * Take a hit.
+     */
     fun takeHit(hit: Hit)
 }
 

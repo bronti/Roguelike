@@ -2,6 +2,9 @@ package ru.spbau.yaveyn.sd.roguelike.items
 
 import ru.spbau.yaveyn.sd.roguelike.population.Hit
 
+/**
+ * Armor.
+ */
 class Armor(val ac: Int) {
 
     fun affectHit(input: Hit): Hit {

@@ -9,6 +9,9 @@ import ru.spbau.yaveyn.sd.roguelike.screenWidth
 
 class DungeonScreen(private val state: GameState) : Screen {
 
+    /**
+     * Center of the screen.
+     */
     fun center() = state.player.getPlace()
 
     private fun topLeft(): MapWithBorders.Place {
@@ -35,7 +38,7 @@ class DungeonScreen(private val state: GameState) : Screen {
     }
 
     private fun displayDeadInfo(terminal: AsciiPanel) {
-        terminal.write("YOU ARE DEAD! MWAHAHA!! (press any key to continue)", 0, screenHeight + 1)
+        terminal.write(boundString("YOU ARE DEAD! MWAHAHA!! (press any key to continue)"), 0, screenHeight + 1)
     }
 
     private fun displayAliveInfo(terminal: AsciiPanel) {
@@ -44,13 +47,13 @@ class DungeonScreen(private val state: GameState) : Screen {
         val healthDescr = "health: ${state.player.getHealthDescription()}"
         terminal.write(boundString("$healthDescr; $statsDescr"), 0, screenHeight + 1)
         terminal.write(boundString(equipmentDescr), 0, screenHeight + 3)
-        terminal.write("--------------------------------------------------------------------------------", 0, screenHeight + 5)
+        terminal.write(boundString("--------------------------------------------------------------------------------"), 0, screenHeight + 5)
         terminal.write(boundString("view: ${state.player.view}"), 0, screenHeight + 7)
-        terminal.write("--------------------------------------------------------------------------------", 0, screenHeight + 9)
-        terminal.write("[wasd] to move; arrows to watch;", 0, screenHeight + 11)
-        terminal.write("[i] to scroll equipment; [c] to scroll container you watching at;", 0, screenHeight + 13)
-        terminal.write("[l] to drop current item into container; [g] to get item from container;", 0, screenHeight + 15)
-        terminal.write("[escape] to give up this miserable life.", 0, screenHeight + 17)
+        terminal.write(boundString("--------------------------------------------------------------------------------"), 0, screenHeight + 9)
+        terminal.write(boundString("[wasd] to move; arrows to watch;"), 0, screenHeight + 11)
+        terminal.write(boundString("[i] to scroll equipment; [c] to scroll container you watching at;"), 0, screenHeight + 13)
+        terminal.write(boundString("[l] to drop current item into container; [g] to get item from container;"), 0, screenHeight + 15)
+        terminal.write(boundString("[escape] to give up this miserable life."), 0, screenHeight + 17)
     }
 
     private fun displayTiles(terminal: AsciiPanel) {

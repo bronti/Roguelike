@@ -1,10 +1,22 @@
 package ru.spbau.yaveyn.sd.roguelike.items
 
+
+/**
+ * Object which can be stored in container.
+ */
 interface StorableObject {
     val weight: Int
 
     fun isInContainer(): Boolean
+
+    /**
+     * Put object into given container.
+     */
     fun putInto(c: Container): Boolean
+
+    /**
+     * Remove object from the container.
+     */
     fun takeFromContainer(): Boolean
 
     fun storage(): Container

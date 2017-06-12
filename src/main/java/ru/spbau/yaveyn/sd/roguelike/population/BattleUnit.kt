@@ -1,8 +1,20 @@
 package ru.spbau.yaveyn.sd.roguelike.population
 
+/**
+ *Object which can hit and be hit.
+ */
 interface BattleUnit: Destructable {
+    /**
+     * Produce hit.
+     */
     fun makeHit(): Hit
+    /**
+     * Melee strength.
+     */
     val mc: Int
+    /**
+     * Armor class.
+     */
     val ac: Int
 }
 

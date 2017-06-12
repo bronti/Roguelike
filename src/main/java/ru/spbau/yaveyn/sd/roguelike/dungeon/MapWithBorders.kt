@@ -1,9 +1,15 @@
 package ru.spbau.yaveyn.sd.roguelike.dungeon
 
+/**
+ * Rectangular map.
+ */
 abstract class MapWithBorders(val width: Int, val height: Int) {
 
     fun getRandomPlace() = Place((Math.random() * width).toInt(), (Math.random() * height).toInt())
 
+    /**
+     * Place on map.
+     */
     inner class Place(val x: Int, val y: Int) {
 
         fun isOutOfBounds() = x < 0 || x >= width || y < 0 || y >= height
@@ -11,6 +17,10 @@ abstract class MapWithBorders(val width: Int, val height: Int) {
         fun shiftedX(d: Int) = Place((x + d), y)
         fun shiftedY(d: Int) = Place(x, (y + d))
         fun shifted(dx: Int, dy: Int) = Place((x + dx), (y + dy))
+
+        /**
+         * Returns closest in map point.
+         */
         fun bounded() = Place(toBoundedX(x), toBoundedY(y))
 
         private fun toBoundedX(t: Int) = Math.max(0, Math.min(t, width - 1))

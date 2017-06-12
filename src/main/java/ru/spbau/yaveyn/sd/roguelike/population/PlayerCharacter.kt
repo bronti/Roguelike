@@ -11,11 +11,16 @@ import ru.spbau.yaveyn.sd.roguelike.items.Item
 import java.util.logging.Level
 import java.util.logging.Logger
 
+/**
+ * PC.
+ */
 class PlayerCharacter (state: GameState, battleUnit: BattleUnit, onMapObject: OnMapObject)
     : Creature(state, battleUnit, onMapObject, PLAYER_WEIGHT, "Brave and Mighty Player") {
     private val logger = Logger.getLogger(Controller::class.java.name)
 
-
+    /**
+     * Place this character is watching to.
+     */
     var watchingTo: MapWithBorders.Place? = null
         private set
 
@@ -23,10 +28,16 @@ class PlayerCharacter (state: GameState, battleUnit: BattleUnit, onMapObject: On
         private set
         get() = if (watchingTo == null) "nothing interesting here" else state.watchAt(watchingTo!!)
 
+    /**
+     * Look at the given place.
+     */
     fun watchAt(place: MapWithBorders.Place) {
         watchingTo = place
     }
 
+    /**
+     * Get active item from container yu are looking at.
+     */
     fun getItem() {
         if (watchingTo == null) return
         val container = state.onPlace(watchingTo!!)
@@ -35,6 +46,9 @@ class PlayerCharacter (state: GameState, battleUnit: BattleUnit, onMapObject: On
         if (addItem(container.activeItem!!)) container.aquireActiveItem()
     }
 
+    /**
+     * Drop active item in container.
+     */
     fun dropItem() {
         if (watchingTo == null) return
         val container = state.onPlace(watchingTo!!)
