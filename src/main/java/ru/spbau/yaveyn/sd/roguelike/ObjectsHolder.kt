@@ -11,8 +11,8 @@ class CreaturesHolder(private val state: GameState) {
     val playerCharacter: PlayerCharacter = PlayerCharacter(state, playerBattleUnit(), OnMapObjectImpl(state, Tile.PLAYER_CHARACTER))
     private val creatures: ArrayList<Creature> = ArrayList()
     private val containers: ArrayList<Container> = ArrayList()
-    val npcs
-        get() = creatures.filter { it != this.playerCharacter }
+    val npcs: List<NonPlayerCharacter>
+        get() = creatures.filter { it is NonPlayerCharacter }.map { it as NonPlayerCharacter }
 
     init {
         placeCreature(playerCharacter)
@@ -29,7 +29,7 @@ class CreaturesHolder(private val state: GameState) {
         containers.add(creature.dropSack())
     }
 
-    private fun getGoblin() = Creature(state, goblinBattleUnit(), OnMapObjectImpl(state, Tile.GOBLIN), GOBLIN_WEIGHT, GOBLIN_DESCR)
+    private fun getGoblin() = NonPlayerCharacter(state, goblinBattleUnit(), OnMapObjectImpl(state, Tile.GOBLIN), GOBLIN_WEIGHT, GOBLIN_DESCR)
 
     private fun placeCreature(creature: Creature) {
         val place = getEmptyPlace()
