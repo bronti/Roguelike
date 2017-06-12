@@ -9,6 +9,8 @@ import ru.spbau.yaveyn.sd.roguelike.screenWidth
 class StartScreen : Screen {
 
     override fun displayOutput(terminal: AsciiPanel) {
+        terminal.writeCenter("The Roguelike", 1)
+        terminal.writeCenter("(c) Anya Yaveyn", 11)
         terminal.writeCenter("-- press any key --", 21)
     }
 

@@ -1,13 +1,15 @@
-package ru.spbau.yaveyn.sd.roguelike.population
+package ru.spbau.yaveyn.sd.roguelike
 
-import ru.spbau.yaveyn.sd.roguelike.*
 import ru.spbau.yaveyn.sd.roguelike.dungeon.MapWithBorders
 import ru.spbau.yaveyn.sd.roguelike.dungeon.OnMapObject
 import ru.spbau.yaveyn.sd.roguelike.dungeon.Tile
 import ru.spbau.yaveyn.sd.roguelike.dungeon.OnMapObjectImpl
 import ru.spbau.yaveyn.sd.roguelike.items.Container
+import ru.spbau.yaveyn.sd.roguelike.population.Creature
+import ru.spbau.yaveyn.sd.roguelike.population.NonPlayerCharacter
+import ru.spbau.yaveyn.sd.roguelike.population.PlayerCharacter
 
-class CreaturesHolder(private val state: GameState) {
+class ObjectsHolder(private val state: GameState) {
     val playerCharacter: PlayerCharacter = PlayerCharacter(state, playerBattleUnit(), OnMapObjectImpl(state, Tile.PLAYER_CHARACTER))
     private val creatures: ArrayList<Creature> = ArrayList()
     private val containers: ArrayList<Container> = ArrayList()

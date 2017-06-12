@@ -26,7 +26,6 @@ internal constructor (private val descr: String,
     override fun isArmor() = armor != null
     override fun asArmor() = armor!!
 
-    override fun asMelee() = melee!!
-
     override fun isMelee() = melee != null
+    override fun asMelee() = melee!!
 }

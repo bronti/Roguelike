@@ -8,8 +8,3 @@ import ru.spbau.yaveyn.sd.roguelike.population.Creature
 fun AsciiPanel.write(tile: Tile, p: DungeonScreen.RelativePlace) {
     write(tile.glyph, p.place.x - p.topLeft.x, p.place.y - p.topLeft.y, tile.color)
 }
-
-
-//fun AsciiPanel.write(c: Creature, topLeft: MapWithBorders.Place) {
-//    write(c.tile, DungeonScreen.RelativePlace(c.onMap(), topLeft))
-//}

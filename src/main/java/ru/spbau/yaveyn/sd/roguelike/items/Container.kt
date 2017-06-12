@@ -1,7 +1,6 @@
 package ru.spbau.yaveyn.sd.roguelike.items
 
 import ru.spbau.yaveyn.sd.roguelike.dungeon.OnMapObject
-import javax.lang.model.util.ElementFilter
 
 open class Container(val onMapObject: OnMapObject, val item: Item, val capacity: Int)
     : Item by item, OnMapObject by onMapObject {
@@ -12,14 +11,14 @@ open class Container(val onMapObject: OnMapObject, val item: Item, val capacity:
         get() = item.weight + items.sumBy(Item::weight)
 
     fun put(i: Item): Boolean {
-        if (i.doPutInto(this)) {
+        if (i.putInto(this)) {
             items.add(i)
             return true
         }
         return false
     }
 
-    var activeItemIndex = 0
+    private var activeItemIndex = 0
         set(i) {
             if (items.isEmpty()) {
                 field = 0

@@ -20,7 +20,7 @@ class Controller(private val repaint:() -> Unit): KeyListener {
     // todo:
     private var state = GameState(makeCaves(mapWidth, mapHeight))
 
-    private var screen: Screen = WelcomeScreen()
+    private var screen: Screen = StartScreen()
 
     private fun makeMove(dest: MapWithBorders.Place) {
         state.player.moveTo(dest)
@@ -30,7 +30,6 @@ class Controller(private val repaint:() -> Unit): KeyListener {
 
     override fun keyPressed(key: KeyEvent) {
         screen = when (screen) {
-            is WelcomeScreen -> StartScreen()
             is StartScreen   -> {
                 state = GameState(makeCaves(mapWidth, mapHeight))
                 logger.log(Level.INFO, "Game started.")

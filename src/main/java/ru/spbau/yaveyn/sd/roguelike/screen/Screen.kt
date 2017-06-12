@@ -5,6 +5,4 @@ import asciiPanel.AsciiPanel
 
 interface Screen {
     fun displayOutput(terminal: AsciiPanel)
-
-//    fun onKey(key: KeyEvent): Screen
 }

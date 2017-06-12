@@ -46,7 +46,7 @@ class PlayerCharacter (state: GameState, battleUnit: BattleUnit, onMapObject: On
         }
     }
 
-    override fun checkedDie() {
+    protected override fun checkedDie() {
         if (isDestructed()) {
             logger.log(Level.INFO, "Player died")
         }
